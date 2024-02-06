@@ -1,8 +1,13 @@
+<pre>
+
 <!DOCTYPE html>
 <html lang="ro">
-<h1>Tema 7</h1>
+<h1>                                Tema </h1>
+    <h1>                         Homework-07 </h1>H1
+
+
 <h2>1. If Statements:</h2>
-<pre>
+
     <?php
 echo "a. Scrie un program PHP care verifică dacă un număr dat este pozitiv și afișează un mesaj corespunzător.";
 
@@ -411,6 +416,140 @@ if ($numar % 2 == 0 && $numar % 3 == 0) {
     echo $numar . " nu este divizibil nici la 2, nici la 3.";
 }
 ?>
+
+<h1>                                  Homework-08 </h1>
+
+
+<h2> 1. While Loop: </h2>
+
+<?php
+
+echo "a. Scrie un program PHP care, folosind un ciclu while, afișează primele 5 numere prime și pătratele acestora. ";
+echo"<br>";
+echo"<br>";
+echo"<br>";
+
+{
+    echo <<<EOD
+function isPrime(\$num) {
+    if (\$num <= 1) {
+        return false;
+    }
+    for (\$i = 2; \$i <= \$num / 2; \$i++) {
+        if (\$num % \$i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+\$count = 0;
+\$num = 2; // începem de la primul număr prim
+
+echo "Primele 5 numere prime și pătratele lor sunt:" . PHP_EOL;
+while (\$count < 5) {
+    if (isPrime(\$num)) {
+        echo \$num . " cu pătratul " . (\$num * \$num) . PHP_EOL;
+        \$count++;
+    }
+    \$num++;
+}
+EOD;
+
+}
+echo"<br>";
+echo"<br>";
+function isPrime($num) {
+    if ($num <= 1) {
+        return false;
+    }
+    for ($i = 2; $i <= $num / 2; $i++) {
+        if ($num % $i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+/* Acest script va afișa primele 5 numere prime și pătratele acestora
+utilizând o buclă while pentru a itera prin numere și funcția isPrime()
+pentru a verifica dacă un număr este prim sau nu. Apoi, pătratele numerelor
+prime sunt calculate și afișate.*/
+/*function isPrime($num) {
+    if ($num <= 1) {
+        return false;
+    }
+    for ($i = 2; $i <= sqrt($num); $i++) {
+        if ($num % $i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+Această funcție primește un număr întreg ca argument și returnează true dacă numărul
+este prim și false în caz contrar. Funcția utilizează o buclă for pentru a verifica dacă
+există vreun divizor între 2 și radicalul pătrat al numărului. Dacă găsește un divizor,
+funcția returnează false, altfel returnează true. Este important să nu uităm să excludem
+cazurile în care numărul este mai mic sau egal cu 1, deoarece acestea nu sunt considerate
+numere prime.
+înlocuirea sqrt($num) cu $num / 2 în exemplul de mai sus va produce același rezultat pentru
+verificarea numerelor prime, dar acest lucru va fi mai puțin eficient din punct de vedere al
+performanței pentru numerele mai mari.
+Această funcție va funcționa corect pentru a verifica dacă un număr este prim sau nu, dar va
+efectua mai multe iterații decât varianta care utilizează sqrt($num), în special pentru numerele
+mai mari. Utilizarea sqrt($num) reduce numărul de iterații necesare pentru a verifica divizorii unui
+număr și, astfel, îmbunătățește performanța funcției pentru numere mai mari.
+În exemplul de mai sus, $num este o variabilă care reprezintă numărul pe care îl verificăm pentru
+a determina dacă este prim sau nu. Această variabilă este utilizată în cadrul funcției isPrime()
+pentru a verifica dacă numărul respectiv este prim.
+
+Inițializăm $num cu valoarea 2, deoarece este cel mai mic număr prim și începem verificarea de
+la acesta. Apoi, incrementăm $num în bucla while pentru a trece la următoarele numere și continuăm
+verificarea lor.
+
+În esență, $num este un număr care este testat pentru a determina dacă este prim sau nu.
+Acesta este utilizat în funcția isPrime() pentru a verifica proprietatea sa de număr prim.
+În expresia for ($i = 2; $i <= $num / 2; $i++), aceasta reprezintă o buclă for în limbajul PHP care
+este folosită pentru a itera prin toți posibilii divizori ai numărului $num.
+
+$i = 2: Inițializăm variabila de control $i cu valoarea 2. Acest lucru se datorează faptului că nu
+este necesar să verificăm dacă numărul este divizibil cu 1, iar pentru a evita divizibilitatea cu numărul
+însuși, începem verificarea de la 2.
+$i <= $num / 2: Această condiție specifică că bucla se va executa atât timp cât $i este mai mic sau egal cu
+jumătate din valoarea lui $num. Aceasta este o optimizare pentru că nu trebuie să căutăm divizori care sunt
+mai mari decât jumătate din valoarea lui $num, deoarece, dacă un număr nu are divizori până la jumătate din
+valoarea sa, atunci nu va avea niciunul până la valoarea sa.
+$i++: La fiecare iterație, valoarea lui $i este incrementată cu 1, pentru a trece la următorul posibil divizor
+al lui $num.
+Prin urmare, această buclă for este utilizată în funcția isPrime() pentru a verifica dacă numărul $num este prim,
+parcurgând toți posibilii săi divizori, de la 2 la jumătate din valoarea sa.
+Aceasta este o buclă while în limbajul PHP care se execută atâta timp cât variabila $count este mai mică decât 5. În
+cadrul buclei:
+Se verifică dacă numărul $num este prim folosind funcția isPrime($num).
+Dacă numărul $num este prim, atunci se afișează numărul împreună cu pătratul său, utilizând echo, iar apoi variabila
+$count este incrementată cu 1, pentru a ține evidența câtor prime s-au găsit până în acel moment.
+La finalul fiecărei iterații, variabila $num este incrementată cu 1, pentru a trece la următorul număr natural.
+În esență, această buclă while afișează primele 5 numere prime și pătratele lor. Buclele while sunt
+folosite atunci când numărul de iterații necesare nu este cunoscut în avans, ci este determinat de o condiție
+specifică. În acest caz, bucla continuă până când sunt găsite și afișate 5 numere prime.
+Pentru a afișa fiecare număr prim și pătratul său pe o linie separată, poți folosi un simbol special pentru a indica
+un nou rând în loc de \n. În PHP, acest simbol este PHP_EOL. Iată cum poți ajusta codul pentru a obține acest lucru:
+*/
+
+$count = 0;
+$num = 2; // începem de la primul număr prim
+
+echo "Primele 5 numere prime și pătratele lor sunt:" . PHP_EOL;
+while ($count < 5) {
+    if (isPrime($num)) {
+        echo $num . " cu pătratul " . ($num * $num) . PHP_EOL;
+        $count++;
+    }
+    $num++;
+}
+
+
+    
 </pre>
 
+    
 
