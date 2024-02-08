@@ -647,6 +647,50 @@ găsi celelalte numere prime. Astfel, break oprește execuția buclei while și 
 Fără instrucțiunea break, bucla while ar continua să ruleze chiar și după ce găsim primul număr prim și ar verifica toate
 celelalte numere naturale până când condiția \$numere_gasite < 10 nu ar mai fi îndeplinită. Utilizarea break ne permite
 să eficientizăm execuția codului și să evităm iterații inutile.*/
+echo"<br>";
+echo"<br>";
+echo"<br>";
+echo "c. Construiește un program care, utilizând un ciclu while, afișează primele 5 numere pare și dublul acestora. ";
+echo"<br>";
+echo"<br>";
+{
+    echo <<<EOD
+\$numere_pare = 0;
+\$numar_natural = 0;
+
+while (\$numere_pare < 5) {
+    \$numar_natural++;
+
+    if (\$numar_natural % 2 == 0) {
+        echo "Numărul par este: \$numar_natural, iar dublul său este: " . (\$numar_natural * 2) . PHP_EOL;
+        \$numere_pare++;
+    }
+}
+EOD;
+
+};
+echo"<br>";
+echo"<br>";
+$numere_pare = 0;
+$numar_natural = 0;
+
+while ($numere_pare < 5) {
+    // Incrementăm numărul natural curent
+    $numar_natural++;
+
+    // Verificăm dacă numărul natural curent este par
+    if ($numar_natural % 2 == 0) {
+        // Afisăm numărul par și dublul său
+        echo "Numărul par este: $numar_natural, iar dublul său este: " . ($numar_natural * 2) . PHP_EOL;
+
+        // Incrementăm numărul de numere pare găsite
+        $numere_pare++;
+    }
+};
+
+/*Acest cod va itera prin primele 5 numere pare, afișând fiecare număr par și dublul său. Variabila $numar_natural
+ este inițializată cu 0 și apoi este incrementată în fiecare iterație a ciclului while. Atunci când găsim un număr par,
+ îl afișăm împreună cu dublul său și incrementăm numărul de numere găsite.*/
 
 
 
