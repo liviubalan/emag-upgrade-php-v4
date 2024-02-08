@@ -546,9 +546,116 @@ while ($count < 5) {
     }
     $num++;
 }
+echo"<br>";
+echo"<br>";
+echo"<br>";
+echo "b. Dezvoltă un script care, prin intermediul unui ciclu while, găsește și afișează cel mai mic număr prim dintre primele 10 numere naturale. ";
+echo"<br>";
+{
+    echo <<<EOD
+function Prime(\$numar) {
+    if (\$numar <= 1) {
+        return false;
+    }
+    for (\$i = 2; \$i < \$numar; \$i++) {
+        if (\$numar % \$i == 0) {                 
+            return false;
+        }
+    }
+    return true;
+}
+\$numere_prime = 0;
+\$numar_narural = 1;
+
+while (\$numere_prime < 10) {
+    \$numar_natural++;
+    if (Prime(\$numar_natural)) {
+        echo "Primul si cel mai mic numar prim din primele 10 numere naturale este: \$numar_natural";
+        break;
+    }
+}
+EOD;
+
+}
+echo"<br>";
+echo"<br>";
+function Prime($numar) {
+    if ($numar <= 1) {
+        return false;
+    }
+    for ($i = 2; $i < $numar; $i++) {
+        if ($numar % $i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+$numere_prime = 0;
+$numar_narural = 1;
+
+while ($numere_prime < 10) {
+    $numar_natural++;
+    if (Prime($numar_natural)) {
+        echo "Primul si cel mai mic numar prim din primele 10 numere naturale este: $numar_natural";
+        break;
+    }
+}
 
 
-    
+
+/*  În expresia if (\$numar % \$i == 0) din PHP, operatorul % este operatorul de modulo, care calculează restul
+împărțirii întregului număr \$numar la \$i. Dacă restul este zero, înseamnă că \$numar este divizibil cu \$i, adică \$i
+este un factor al lui \$numar. Deci, această expresie verifică dacă \$numar este divizibil exact cu \$i. Dacă condiția
+este îndeplinită, atunci \$numar nu este prim, deoarece are cel puțin un alt factor în afara de 1 și el însuși.
+Care este diferenta dintre for (\$i = 2; \$i <= \$num / 2; \$i++) si for (\$i = 2; \$i < \$numar; \$i++)
+Cele două expresii sunt utilizate în contextul verificării dacă un număr \$numar este prim sau nu.
+
+1. for (\$i = 2; \$i <= \$numar / 2; \$i++): Acesta este un mod comun de a itera prin posibilii factori ai unui număr
+pentru a verifica dacă este prim. Ciclul începe de la 2 și se oprește la jumătatea numărului \$numar, deoarece nu există
+niciun factor mai mare decât jumătatea unui număr care ar putea diviza numărul fără rest. Astfel, acest lucru ajută la
+reducerea numărului de iterații necesare pentru a verifica dacă un număr este prim sau nu, ceea ce poate îmbunătăți
+performanța, în special pentru numere mai mari.
+
+2. for (\$i = 2; \$i < \$numar; \$i++): Aici, ciclul se oprește atunci când indicele \$i devine egal cu \$numar.
+În esență, acest lucru înseamnă că ciclul va itera de la 2 până la \$numar - 1, verificând fiecare număr întreg
+între 2 și \$numar - 1 pentru a vedea dacă este un factor al lui \$numar.
+
+Diferența principală dintre cele două expresii este că prima verifică numai până la jumătatea numărului
+\$numar, în timp ce cea de-a doua verifică până la numărul \$numar însuși. De regulă, prima abordare este mai
+eficientă, deoarece reduce numărul de iterații necesare pentru a verifica primătatea unui număr.*/
+
+/* \$numere_prime = 0;
+\$numar_narural = 1;
+
+$numere_prime = 0;: Această linie de cod inițializează variabila $numere_prime cu valoarea 0.
+Această variabilă este utilizată pentru a ține evidența numărului de numere prime găsite până în acel moment.
+Inițializarea cu valoarea 0 indică faptul că încă nu a fost găsit niciun număr prim.
+Putem inițializa variabila \$numar_natural cu 1 și să încercăm să găsim primul număr prim pornind de la această valoare
+și să iterăm prin toate numerele naturale până când găsim un număr prim.*/
+
+/* while (\$numere_prime < 10) {
+    \$numar_natural++;
+    if (Prime(\$numar_natural)) {
+        echo "Primul si cel mai mic numar prim din primele 10 numere naturale este: \$numar_natural";
+        break;
+    }
+}
+ În codul anterior, instrucțiunea break este folosită pentru a ieși din bucla while imediat ce
+găsim primul număr prim. De îndată ce găsim primul număr prim, nu mai este necesar să continuăm căutarea pentru a
+găsi celelalte numere prime. Astfel, break oprește execuția buclei while și continuă cu instrucțiunile din afara buclei.
+Fără instrucțiunea break, bucla while ar continua să ruleze chiar și după ce găsim primul număr prim și ar verifica toate
+celelalte numere naturale până când condiția \$numere_gasite < 10 nu ar mai fi îndeplinită. Utilizarea break ne permite
+să eficientizăm execuția codului și să evităm iterații inutile.*/
+
+
+
+
+
+
+
+
+ ?>   
 </pre>
 
     
