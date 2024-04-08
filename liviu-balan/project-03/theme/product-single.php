@@ -277,10 +277,11 @@ $row_product = $result_modal->fetch_array(MYSQLI_ASSOC);
 							<option>XL</option>
 						</select>
 					</div>
+          <form action="cart.php" method="post">
 					<div class="product-quantity">
 						<span>Quantity:</span>
 						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
+							<input id="product-quantity" type="text" value="1" name="product-quantity">
 						</div>
 					</div>
 					<div class="product-category">
@@ -290,10 +291,12 @@ $row_product = $result_modal->fetch_array(MYSQLI_ASSOC);
 						</ul>
 					</div>
           <?php if ($row_product['stock'] > 0) { ?>
-	  				<button href="cart.html" class="btn btn-main mt-20">Add To Cart</button>
+            <input type="hidden" name="cart_product_id" value="<?= $_GET['product_id'] ?>">
+            <input type="submit" class="btn btn-main mt-20" name="cart_button" value="Add To Cart">
           <?php } else { ?>
             <span>Out of stock</span>
           <?php } ?>
+          </form>
 				</div>
 			</div>
 		</div>

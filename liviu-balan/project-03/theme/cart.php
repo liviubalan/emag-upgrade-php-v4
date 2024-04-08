@@ -1,4 +1,14 @@
 <?php
+session_start();
+if (count($_POST) > 0) {
+  if ($_POST['cart_button'] == 'Add To Cart') {
+    $_SESSION['cart'][$_POST['cart_product_id']] = [
+      'id' => $_POST['cart_product_id'],
+      'quantity' => $_POST['product-quantity'],
+    ];
+  }
+}
+//var_dump($_SESSION);
 include "include/header.php";
 ?>
 
@@ -50,46 +60,33 @@ include "include/header.php";
                     <tr>
                       <th class="">Item Name</th>
                       <th class="">Item Price</th>
+                      <th class="">Quantity</th>
                       <th class="">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
+                  <?php
+                  $product_ids = array_keys($_SESSION['cart']);
+                  $product_ids = implode(', ', $product_ids);
+                  $sql_modal = "SELECT * FROM products WHERE id IN (".$product_ids.")";
+                  $result_modal = $mysqli->query($sql_modal);
+                  while ($row_product = $result_modal->fetch_array(MYSQLI_ASSOC)) {
+                    $image = "/liviu-balan/project-03/theme/images/shop/products/" . $row_product["image"];
+                  ?>
                     <tr class="">
                       <td class="">
                         <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-1.jpg" alt="" />
-                          <a href="#!">Sunglass</a>
+                          <img width="80" src="<?= $image ?>" alt="" />
+                          <a href="product-single.php?product_id=<?= $row_product['id'] ?>"><?= $row_product['name'] ?></a>
                         </div>
                       </td>
-                      <td class="">$200.00</td>
+                      <td class=""><?= $row_product['price'] ?> RON</td>
+                      <td class=""><?= $_SESSION['cart'][$row_product["id"]]['quantity'] ?></td>
                       <td class="">
                         <a class="product-remove" href="#!">Remove</a>
                       </td>
                     </tr>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-2.jpg" alt="" />
-                          <a href="#!">Airspace</a>
-                        </div>
-                      </td>
-                      <td class="">$200.00</td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-3.jpg" alt="" />
-                          <a href="#!">Bingo</a>
-                        </div>
-                      </td>
-                      <td class="">$200.00</td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
+                  <?php } ?>
                   </tbody>
                 </table>
                 <a href="checkout.html" class="btn btn-main pull-right">Checkout</a>
