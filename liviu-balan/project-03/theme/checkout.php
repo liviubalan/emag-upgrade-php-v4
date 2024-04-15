@@ -1,153 +1,34 @@
-<!DOCTYPE html>
+<?php
+session_start();
+include "include/header.php";
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
+if (count($_POST) > 0) {
+  if ($_POST['checkout_button'] == 'Place Order') {
+    $full_name = $_POST['full_name'];
+    $address = $_POST['address'];
+    $zipcode = $_POST['zipcode'];
+    $city = $_POST['city'];
+    $phone = $_POST['phone'];
+    $sql = "INSERT INTO `orders` (`id`, `full_name`, `address`, `zipcode`, `city`, `phone`) VALUES
+            (NULL, '$full_name', '$address', '$zipcode', '$city', '$phone')";
+    $mysqli->query($sql);
+    $order_id = $mysqli->insert_id;
 
-<html lang="en">
-<head>
+    foreach ($_SESSION['cart'] as $product) {
+      $product_id = $product['id'];
+      $pcs = $product['quantity'];
+      $sql = "INSERT INTO `orders_products` (`id`, `order_id`, `product_id`, `pcs`) VALUES (NULL, '$order_id', '$product_id', '$pcs')";
+      $mysqli->query($sql);
+    }
+    session_unset();
 
-  <!-- Basic Page Needs
-  ================================================== -->
-  <meta charset="utf-8">
-  <title>Glamour Concept</title>
-
-  <!-- Mobile Specific Metas
-  ================================================== -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Construction Html5 Template">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="author" content="Themefisher">
-  <meta name="generator" content="Themefisher Constra HTML Template v1.0">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
-
-  <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="plugins/themefisher-font/style.css">
-  <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
-
-  <!-- Animate css -->
-  <link rel="stylesheet" href="plugins/animate/animate.css">
-  <!-- Slick Carousel -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
-
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
-
-</head>
-
-<body id="body">
-<!-- Start Top Header Bar -->
-<section class="top-header">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4 col-xs-12 col-sm-4">
-				<div class="contact-number">
-					<i class="tf-ion-ios-telephone"></i>
-					<span>0129- 12323-123123</span>
-				</div>
-			</div>
-			<div class="col-md-4 col-xs-12 col-sm-4">
-				<!-- Site Logo -->
-				<div class="logo text-center">
-					<a href="index.html">
-						<!-- replace logo here -->
-						<svg width="135px" height="29px" viewBox="0 0 155 29" version="1.1" xmlns="http://www.w3.org/2000/svg"
-							xmlns:xlink="http://www.w3.org/1999/xlink">
-							<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-size="40"
-								font-family="AustinBold, Austin" font-weight="bold">
-								<g id="Group" transform="translate(-108.000000, -297.000000)" fill="#000000">
-									<text id="AVIATO">
-										<tspan x="108.94" y="325">AVIATO</tspan>
-									</text>
-								</g>
-							</g>
-						</svg>
-					</a>
-				</div>
-			</div>
-			<div class="col-md-4 col-xs-12 col-sm-4">
-				<!-- Cart -->
-				<ul class="top-menu text-right list-inline">
-					<li class="dropdown cart-nav dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-android-cart"></i>Cart</a>
-						<div class="dropdown-menu cart-dropdown">
-							<!-- Cart Item -->
-							<div class="media">
-								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
-									<div class="cart-price">
-										<span>1 x</span>
-										<span>1250.00</span>
-									</div>
-									<h5><strong>$1200</strong></h5>
-								</div>
-								<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-							</div><!-- / Cart Item -->
-							<!-- Cart Item -->
-							<div class="media">
-								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-2.jpg" alt="image" />
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
-									<div class="cart-price">
-										<span>1 x</span>
-										<span>1250.00</span>
-									</div>
-									<h5><strong>$1200</strong></h5>
-								</div>
-								<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-							</div><!-- / Cart Item -->
-
-							<div class="cart-summary">
-								<span>Total</span>
-								<span class="total-price">$1799.00</span>
-							</div>
-							<ul class="text-center cart-buttons">
-								<li><a href="cart.html" class="btn btn-small">View Cart</a></li>
-								<li><a href="checkout.html" class="btn btn-small btn-solid-border">Checkout</a></li>
-							</ul>
-						</div>
-
-					</li><!-- / Cart -->
-
-					<!-- Search -->
-					<li class="dropdown search dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-ios-search-strong"></i> Search</a>
-						<ul class="dropdown-menu search-dropdown">
-							<li>
-								<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
-							</li>
-						</ul>
-					</li><!-- / Search -->
-
-					<!-- Languages -->
-					<li class="commonSelect">
-						<select class="form-control">
-							<option>EN</option>
-							<option>DE</option>
-							<option>FR</option>
-							<option>ES</option>
-						</select>
-					</li><!-- / Languages -->
-
-				</ul><!-- / .nav .navbar-nav .navbar-right -->
-			</div>
-		</div>
-	</div>
-</section><!-- End Top Header Bar -->
+//    $_SESSION['cart'][$_POST['cart_product_id']] = [
+//      'id' => $_POST['cart_product_id'],
+//      'quantity' => $_POST['product-quantity'],
+//    ];
+  }
+}
+?>
 
 
 <!-- Main Menu Section -->
@@ -324,14 +205,14 @@
             <div class="col-md-8">
                <div class="block billing-details">
                   <h4 class="widget-title">Billing Details</h4>
-                  <form class="checkout-form">
+                  <form class="checkout-form" method="post" action="checkout.php">
                      <div class="form-group">
                         <label for="full_name">Full Name</label>
-                        <input type="text" class="form-control" id="full_name" placeholder="">
+                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="">
                      </div>
                      <div class="form-group">
                         <label for="user_address">Address</label>
-                        <input type="text" class="form-control" id="user_address" placeholder="">
+                        <input type="text" class="form-control" id="user_address" name="address" placeholder="">
                      </div>
                      <div class="checkout-country-code clearfix">
                         <div class="form-group">
@@ -344,68 +225,62 @@
                         </div>
                      </div>
                      <div class="form-group">
-                        <label for="user_country">Country</label>
-                        <input type="text" class="form-control" id="user_country" placeholder="">
+                        <label for="user_country">Phone</label>
+                        <input type="text" class="form-control" id="user_country" name="phone" placeholder="">
                      </div>
+
+                    <div>
+                      <input type="submit" class="btn btn-main mt-20" name="checkout_button" value="Place Order">
+                    </div>
                   </form>
-               </div>
-               <div class="block">
-                  <h4 class="widget-title">Payment Method</h4>
-                  <p>Credit Cart Details (Secure payment)</p>
-                  <div class="checkout-product-details">
-                     <div class="payment">
-                        <div class="card-details">
-                           <form  class="checkout-form">
-                              <div class="form-group">
-                                 <label for="card-number">Card Number <span class="required">*</span></label>
-                                 <input  id="card-number" class="form-control"   type="tel" placeholder="•••• •••• •••• ••••">
-                              </div>
-                              <div class="form-group half-width padding-right">
-                                 <label for="card-expiry">Expiry (MM/YY) <span class="required">*</span></label>
-                                 <input id="card-expiry" class="form-control" type="tel" placeholder="MM / YY">
-                              </div>
-                              <div class="form-group half-width padding-left">
-                                 <label for="card-cvc">Card Code <span class="required">*</span></label>
-                                 <input id="card-cvc" class="form-control"  type="tel" maxlength="4" placeholder="CVC" >
-                              </div>
-                              <a href="confirmation.html" class="btn btn-main mt-20">Place Order</a >
-                           </form>
-                        </div>
-                     </div>
-                  </div>
                </div>
             </div>
             <div class="col-md-4">
                <div class="product-checkout-details">
                   <div class="block">
                      <h4 class="widget-title">Order Summary</h4>
-                     <div class="media product-card">
-                        <a class="pull-left" href="product-single.html">
-                           <img class="media-object" src="images/shop/cart/cart-1.jpg" alt="Image" />
-                        </a>
-                        <div class="media-body">
-                           <h4 class="media-heading"><a href="product-single.html">Ambassador Heritage 1921</a></h4>
-                           <p class="price">1 x $249</p>
-                           <span class="remove" >Remove</span>
-                        </div>
-                     </div>
-                     <div class="discount-code">
-                        <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
-                     </div>
-                     <ul class="summary-prices">
-                        <li>
-                           <span>Subtotal:</span>
-                           <span class="price">$190</span>
-                        </li>
-                        <li>
-                           <span>Shipping:</span>
-                           <span>Free</span>
-                        </li>
-                     </ul>
-                     <div class="summary-total">
-                        <span>Total</span>
-                        <span>$250</span>
-                     </div>
+                      <?php
+                      if (isset($_SESSION['cart'])) {
+                        $product_ids = array_keys($_SESSION['cart']);
+                        $product_ids = implode(', ', $product_ids);
+                        $sql_modal = "SELECT * FROM products WHERE id IN (".$product_ids.")";
+                        $result_modal = $mysqli->query($sql_modal);
+                        $total = 0;
+                        while ($row_product = $result_modal->fetch_array(MYSQLI_ASSOC)) {
+                          $image = "/liviu-balan/project-03/theme/images/shop/products/" . $row_product["image"];
+                          $pcs = $_SESSION['cart'][$row_product["id"]]['quantity'];
+                          $total += $pcs * $row_product['price'];
+                        ?>
+                       <div class="media product-card">
+                          <a class="pull-left" href="product-single.html">
+                             <img class="media-object" src="<?= $image ?>" alt="Image" />
+                          </a>
+                          <div class="media-body">
+                             <h4 class="media-heading"><a href="product-single.php?product_id=<?= $row_product['id'] ?>"><?= $row_product['name'] ?></a></h4>
+                             <p class="price"><?= $pcs ?> x <?= $row_product['price'] ?> RON</p>
+                          </div>
+                       </div>
+                      <?php } ?>
+                       <div class="discount-code">
+                          <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
+                       </div>
+                       <ul class="summary-prices">
+                          <li>
+                             <span>Subtotal:</span>
+                             <span class="price"><?= $total ?> RON</span>
+                          </li>
+                          <li>
+                             <span>Shipping:</span>
+                             <span>Free</span>
+                          </li>
+                       </ul>
+                       <div class="summary-total">
+                          <span>Total</span>
+                          <span><?= $total ?> RON</span>
+                       </div>
+                    <?php } else { ?>
+                        No products in cart.
+                    <?php } ?>
                      <div class="verified-icon">
                         <img src="images/shop/verified.png">
                      </div>
@@ -432,80 +307,8 @@
       </div>
    </div>
 
-<footer class="footer section text-center">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="social-media">
-					<li>
-						<a href="https://www.facebook.com/themefisher">
-							<i class="tf-ion-social-facebook"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.instagram.com/themefisher">
-							<i class="tf-ion-social-instagram"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.twitter.com/themefisher">
-							<i class="tf-ion-social-twitter"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.pinterest.com/themefisher/">
-							<i class="tf-ion-social-pinterest"></i>
-						</a>
-					</li>
-				</ul>
-				<ul class="footer-menu text-uppercase">
-					<li>
-						<a href="contact.html">CONTACT</a>
-					</li>
-					<li>
-						<a href="shop.html">SHOP</a>
-					</li>
-					<li>
-						<a href="pricing.html">Pricing</a>
-					</li>
-					<li>
-						<a href="contact.html">PRIVACY POLICY</a>
-					</li>
-				</ul>
-				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
-			</div>
-		</div>
-	</div>
-</footer>
-    <!--
-    Essential Scripts
-    =====================================-->
 
-    <!-- Main jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Bootstrap Touchpin -->
-    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
-    <!-- Instagram Feed Js -->
-    <script src="plugins/instafeed/instafeed.min.js"></script>
-    <!-- Video Lightbox Plugin -->
-    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
-    <!-- Count Down Js -->
-    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+<?php
+include "include/footer.php";
+?>
 
-    <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/slick/slick-animation.min.js"></script>
-
-    <!-- Google Mapl -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
-
-    <!-- Main Js File -->
-    <script src="js/script.js"></script>
-
-
-
-  </body>
-  </html>

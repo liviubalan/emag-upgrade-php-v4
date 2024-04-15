@@ -2,6 +2,141 @@
 include "include/header.php";
 ?>
 
+<div class="block">
+  <div id="map_canvas" style="width: 1350px; height: 500px"></div>
+
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script type="text/javascript"
+          src="http://maps.google.com/maps/api/js?sensor=TRUEORFALSE"></script>
+  <script type="text/javascript">
+    var map;
+    var markers;
+    function initialize() {
+
+      $
+        .ajax({
+
+          type : "POST",
+          url : "Your Servlet Name", //Servlet Name
+          data : $("#FormID"),
+
+          success : function(responseJson) {
+
+
+            var result = $.parseJSON(responseJson);
+            markers = result;
+
+            // Below mapOptions var includes styling maps and zoom level of your map, it also includes mapTypeId.
+            var mapOptions = {
+              center : new google.maps.LatLng(
+                markers[0].latitude, markers[0].longitude),
+              zoom : 5,
+              scrollwheel: false,
+              styles : [ {
+                "featureType" : "administrative",
+                "elementType" : "labels.text.fill",
+                "stylers" : [ {
+                  "color" : "#444444"
+                } ]
+              }, {
+                "featureType" : "landscape",
+                "elementType" : "all",
+                "stylers" : [ {
+                  "color" : "#f2f2f2"
+                } ]
+              }, {
+                "featureType" : "poi",
+                "elementType" : "all",
+                "stylers" : [ {
+                  "visibility" : "off"
+                } ]
+              }, {
+                "featureType" : "poi.park",
+                "elementType" : "geometry.fill",
+                "stylers" : [ {
+                  "visibility" : "on"
+                }, {
+                  "color" : "#1ba093"
+                } ]
+              }, {
+                "featureType" : "road",
+                "elementType" : "all",
+                "stylers" : [ {
+                  "saturation" : -100
+                }, {
+                  "lightness" : 45
+                } ]
+              }, {
+                "featureType" : "road.highway",
+                "elementType" : "all",
+                "stylers" : [ {
+                  "visibility" : "simplified"
+                } ]
+              }, {
+                "featureType" : "road.arterial",
+                "elementType" : "labels.icon",
+                "stylers" : [ {
+                  "visibility" : "off"
+                } ]
+              }, {
+                "featureType" : "transit",
+                "elementType" : "all",
+                "stylers" : [ {
+                  "visibility" : "off"
+                } ]
+              }, {
+                "featureType" : "water",
+                "elementType" : "all",
+                "stylers" : [ {
+                  "color" : "#00748c"
+                }, {
+                  "visibility" : "on"
+                } ]
+              } ],
+              mapTypeId : google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document
+              .getElementById("map_canvas"), mapOptions);
+            addYourLocationButton(map,marker);
+            //Create and open InfoWindow.
+            var infoWindow = new google.maps.InfoWindow();
+
+            for (var i = 0; i < markers.length; i++) {
+              var data = markers[i];
+
+              var myLatlng = new google.maps.LatLng(
+                data.latitude, data.longitude);
+              var marker = new google.maps.Marker({
+                position : myLatlng,
+                animation: google.maps.Animation.DROP,
+                map : map,
+                title : //Any title that you want to display while cursor over the marker.
+              });
+
+              //Click event
+              (function(marker, data) {
+                google.maps.event
+                  .addListener(
+                    marker,
+                    "click",
+                    function(e) {
+                      infoWindow
+                        .setContent("<div style = 'width:300px;min-height:50px'>+Write information about your location if you want.+"</div>");
+                      infoWindow
+                        .open(map, marker);
+                    });
+              })(marker, data);
+
+            }
+
+          }
+
+        });
+
+    }
+  </script>
+</div>
+
 <section class="page-header">
 	<div class="container">
 		<div class="row">

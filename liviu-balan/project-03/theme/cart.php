@@ -66,30 +66,34 @@ include "include/header.php";
                   </thead>
                   <tbody>
                   <?php
-                  $product_ids = array_keys($_SESSION['cart']);
-                  $product_ids = implode(', ', $product_ids);
-                  $sql_modal = "SELECT * FROM products WHERE id IN (".$product_ids.")";
-                  $result_modal = $mysqli->query($sql_modal);
-                  while ($row_product = $result_modal->fetch_array(MYSQLI_ASSOC)) {
-                    $image = "/liviu-balan/project-03/theme/images/shop/products/" . $row_product["image"];
-                  ?>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="<?= $image ?>" alt="" />
-                          <a href="product-single.php?product_id=<?= $row_product['id'] ?>"><?= $row_product['name'] ?></a>
-                        </div>
-                      </td>
-                      <td class=""><?= $row_product['price'] ?> RON</td>
-                      <td class=""><?= $_SESSION['cart'][$row_product["id"]]['quantity'] ?></td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
+                  if (isset($_SESSION['cart'])) {
+                    $product_ids = array_keys($_SESSION['cart']);
+                    $product_ids = implode(', ', $product_ids);
+                    $sql_modal = "SELECT * FROM products WHERE id IN (".$product_ids.")";
+                    $result_modal = $mysqli->query($sql_modal);
+                    while ($row_product = $result_modal->fetch_array(MYSQLI_ASSOC)) {
+                      $image = "/liviu-balan/project-03/theme/images/shop/products/" . $row_product["image"];
+                    ?>
+                      <tr class="">
+                        <td class="">
+                          <div class="product-info">
+                            <img width="80" src="<?= $image ?>" alt="" />
+                            <a href="product-single.php?product_id=<?= $row_product['id'] ?>"><?= $row_product['name'] ?></a>
+                          </div>
+                        </td>
+                        <td class=""><?= $row_product['price'] ?> RON</td>
+                        <td class=""><?= $_SESSION['cart'][$row_product["id"]]['quantity'] ?></td>
+                        <td class="">
+                          <a class="product-remove" href="#!">Remove</a>
+                        </td>
+                      </tr>
+                    <?php }
+                  } else { ?>
+                    No products in cart.
                   <?php } ?>
                   </tbody>
                 </table>
-                <a href="checkout.html" class="btn btn-main pull-right">Checkout</a>
+                <a href="checkout.php" class="btn btn-main pull-right">Checkout</a>
               </form>
             </div>
           </div>
